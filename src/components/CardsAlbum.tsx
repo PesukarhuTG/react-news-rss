@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CardProps from '../types/Card';
-import Card from './Card';
+import { Card, Spinner } from './index';
 
 interface CardListProps {
   cards?: CardProps[];
@@ -14,7 +14,7 @@ class CardsAlbum extends React.Component<CardListProps> {
 
   render() {
     if (!this.props.cards?.length) {
-      return <LoadMessage>Data is preparing...</LoadMessage>;
+      return <Spinner />;
     }
 
     const { cards } = this.props;
@@ -38,11 +38,6 @@ const Album = styled.ul`
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 50px;
-`;
-
-const LoadMessage = styled.p`
-  text-align: center;
-  padding: 20px 0;
 `;
 
 export default CardsAlbum;
