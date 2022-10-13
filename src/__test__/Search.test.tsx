@@ -5,7 +5,7 @@ import { SearchPanel } from '../components';
 
 describe('Search', () => {
   test('First, we dont have a focus and then we get it', async () => {
-    render(<SearchPanel />);
+    render(<SearchPanel onSearch={() => {}} />);
 
     await waitFor(() => {
       const input = screen.getByPlaceholderText(/Search.../i);
@@ -16,7 +16,7 @@ describe('Search', () => {
   });
 
   test('check input value', () => {
-    render(<SearchPanel />);
+    render(<SearchPanel onSearch={() => {}} />);
 
     const input = screen.getByTestId('input-search');
     expect(input).toContainHTML('');

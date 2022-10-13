@@ -31,10 +31,14 @@ class MainPage extends React.Component<State> {
     this.checkData();
   }
 
+  onSubmit = (data: CardProps[]) => {
+    this.setState({ news: data });
+  };
+
   render() {
     return (
       <Layout>
-        <SearchPanel />
+        <SearchPanel onSearch={this.onSubmit} />
         <Headling>Hot news on Racoon digest</Headling>
         <CardsAlbum cards={this.state.news} />
       </Layout>

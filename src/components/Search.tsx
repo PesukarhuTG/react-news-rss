@@ -1,17 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Input } from 'antd';
+import CardProps from '../types/Card';
+import { getNews, searchNews } from '../services/getDataApi';
 
 const { Search } = Input;
 
-interface State {
-  value?: string;
+interface SearchProps {
+  onSearch: (data: CardProps[]) => void;
 }
 
-class SearchPanel extends React.Component<State> {
-  state = {
-    value: '',
-  };
+interface State {
+  value?: string;
+  news?: CardProps[];
+}
+
+class SearchPanel extends React.Component<SearchProps, State> {
+  constructor(props: SearchProps) {
+    super(props);
+    this.state = {
+      value: '',
+      news: [],
+    };
+  }
 
   onChange(searchValue: string) {
     this.setState({ value: searchValue });
@@ -24,21 +35,32 @@ class SearchPanel extends React.Component<State> {
     }
   }
 
-  componentDidUpdate(): void {
-    if (this.state.value === '') {
-      localStorage.setItem('searchData', this.state.value); //if we clear input via clear icon
+  componentWillUnmount(): void {
+    if (this.state.value?.length) {
+      localStorage.setItem('searchData', this.state.value);
+    } else {
+      localStorage.setItem('searchData', '');
     }
   }
 
-  componentWillUnmount(): void {
-    this.state.value.length && localStorage.setItem('searchData', this.state.value);
-  }
+  handleSubmit = () => {
+    if (this.state.value) {
+      searchNews(this.state.value).then((resp) => {
+        this.props.onSearch(resp.articles);
+      });
+    } else {
+      getNews().then((resp) => {
+        this.props.onSearch(resp.articles);
+      });
+    }
+  };
 
   render() {
     return (
       <StyledSearch
         placeholder="Search..."
         onChange={(e) => this.onChange(e.target.value)}
+        onSearch={this.handleSubmit}
         value={this.state.value}
         data-testid="input-search"
         allowClear

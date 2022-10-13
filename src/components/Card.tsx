@@ -5,6 +5,7 @@ import CardProps from '../types/Card';
 class Card extends React.Component<CardProps> {
   constructor(props: CardProps) {
     super(props);
+    this.state = { loaded: false };
   }
 
   render() {
