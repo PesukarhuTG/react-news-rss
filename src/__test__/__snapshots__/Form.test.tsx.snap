@@ -1,0 +1,396 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form tests Form snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <form
+        data-testid="form"
+      >
+        <div
+          class="form-wrapper"
+        >
+          <label
+            class="input-wrapper"
+          >
+            <span
+              class="input-name"
+            >
+              Name
+            </span>
+            <input
+              class="input-field"
+              data-testid="input-fname"
+              name="name"
+              required=""
+              type="text"
+            />
+          </label>
+          <label
+            class="input-wrapper"
+          >
+            <span
+              class="input-name"
+            >
+              Birthday
+            </span>
+            <input
+              class="input-field"
+              data-testid="input-fdata"
+              name="birthday"
+              required=""
+              type="date"
+            />
+          </label>
+        </div>
+        <div
+          class="form-wrapper"
+        >
+          <label
+            class="input-wrapper"
+          >
+            <span
+              class="input-name"
+            >
+              Choose a city
+            </span>
+            <select
+              class="input-city"
+              data-testid="input-fcity"
+              name="city"
+              required=""
+            >
+              <option
+                value=""
+              />
+              <option
+                value="Saint-Petersburg"
+              >
+                Saint-Petersburg
+              </option>
+              <option
+                value="Moscow"
+              >
+                Moscow
+              </option>
+              <option
+                value="Voronezh"
+              >
+                Voronezh
+              </option>
+              <option
+                value="Petrozavodsk"
+              >
+                Petrozavodsk
+              </option>
+              <option
+                value="other city"
+              >
+                ...other city
+              </option>
+            </select>
+          </label>
+          <label
+            class="input-wrapper"
+          >
+            <span
+              class="input-name"
+            >
+              Gender
+            </span>
+            <div
+              class="genders-wrapper"
+            >
+              <input
+                checked=""
+                data-testid="input-fgender-man"
+                id="man"
+                name="gender"
+                type="radio"
+                value="man"
+              />
+              <label
+                class="gender-name"
+                for="man"
+              >
+                man
+              </label>
+              <input
+                data-testid="input-fgender-woman"
+                id="woman"
+                name="gender"
+                type="radio"
+                value="woman"
+              />
+              <label
+                class="gender-name"
+                for="woman"
+              >
+                woman
+              </label>
+            </div>
+          </label>
+        </div>
+        <label
+          class="input-wrapper"
+        >
+          <span
+            class="input-name"
+          >
+            Upload a file
+          </span>
+          <input
+            accept="image/*, .png, .jpg"
+            class="input-file"
+            data-testid="input-file"
+            name="file"
+            type="file"
+          />
+        </label>
+        <label
+          class="input-wrapper-gorizont"
+        >
+          <input
+            data-testid="input-faccept"
+            name="remember"
+            type="checkbox"
+          />
+          <span
+            class="remember-name"
+          >
+            I consent to use my personal data
+          </span>
+        </label>
+        <button
+          class="btn-submit"
+          data-testid="btn-submit"
+          disabled=""
+          type="submit"
+        >
+          Send my data
+        </button>
+      </form>
+    </div>
+  </body>,
+  "container": <div>
+    <form
+      data-testid="form"
+    >
+      <div
+        class="form-wrapper"
+      >
+        <label
+          class="input-wrapper"
+        >
+          <span
+            class="input-name"
+          >
+            Name
+          </span>
+          <input
+            class="input-field"
+            data-testid="input-fname"
+            name="name"
+            required=""
+            type="text"
+          />
+        </label>
+        <label
+          class="input-wrapper"
+        >
+          <span
+            class="input-name"
+          >
+            Birthday
+          </span>
+          <input
+            class="input-field"
+            data-testid="input-fdata"
+            name="birthday"
+            required=""
+            type="date"
+          />
+        </label>
+      </div>
+      <div
+        class="form-wrapper"
+      >
+        <label
+          class="input-wrapper"
+        >
+          <span
+            class="input-name"
+          >
+            Choose a city
+          </span>
+          <select
+            class="input-city"
+            data-testid="input-fcity"
+            name="city"
+            required=""
+          >
+            <option
+              value=""
+            />
+            <option
+              value="Saint-Petersburg"
+            >
+              Saint-Petersburg
+            </option>
+            <option
+              value="Moscow"
+            >
+              Moscow
+            </option>
+            <option
+              value="Voronezh"
+            >
+              Voronezh
+            </option>
+            <option
+              value="Petrozavodsk"
+            >
+              Petrozavodsk
+            </option>
+            <option
+              value="other city"
+            >
+              ...other city
+            </option>
+          </select>
+        </label>
+        <label
+          class="input-wrapper"
+        >
+          <span
+            class="input-name"
+          >
+            Gender
+          </span>
+          <div
+            class="genders-wrapper"
+          >
+            <input
+              checked=""
+              data-testid="input-fgender-man"
+              id="man"
+              name="gender"
+              type="radio"
+              value="man"
+            />
+            <label
+              class="gender-name"
+              for="man"
+            >
+              man
+            </label>
+            <input
+              data-testid="input-fgender-woman"
+              id="woman"
+              name="gender"
+              type="radio"
+              value="woman"
+            />
+            <label
+              class="gender-name"
+              for="woman"
+            >
+              woman
+            </label>
+          </div>
+        </label>
+      </div>
+      <label
+        class="input-wrapper"
+      >
+        <span
+          class="input-name"
+        >
+          Upload a file
+        </span>
+        <input
+          accept="image/*, .png, .jpg"
+          class="input-file"
+          data-testid="input-file"
+          name="file"
+          type="file"
+        />
+      </label>
+      <label
+        class="input-wrapper-gorizont"
+      >
+        <input
+          data-testid="input-faccept"
+          name="remember"
+          type="checkbox"
+        />
+        <span
+          class="remember-name"
+        >
+          I consent to use my personal data
+        </span>
+      </label>
+      <button
+        class="btn-submit"
+        data-testid="btn-submit"
+        disabled=""
+        type="submit"
+      >
+        Send my data
+      </button>
+    </form>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
