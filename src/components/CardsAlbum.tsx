@@ -7,9 +7,16 @@ interface CardListProps {
   cards?: CardProps[];
 }
 
-class CardsAlbum extends React.Component<CardListProps> {
+interface State {
+  isModal?: boolean;
+}
+
+class CardsAlbum extends React.Component<CardListProps, State> {
   constructor(props: CardListProps) {
     super(props);
+    this.state = {
+      isModal: false,
+    };
   }
 
   render() {

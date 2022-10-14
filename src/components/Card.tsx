@@ -1,28 +1,79 @@
 import React from 'react';
 import styled from 'styled-components';
 import CardProps from '../types/Card';
+import { Modal } from './index';
 
-class Card extends React.Component<CardProps> {
+interface State {
+  isModal?: boolean;
+}
+
+class Card extends React.Component<CardProps, State> {
   constructor(props: CardProps) {
     super(props);
-    this.state = { loaded: false };
+    this.state = {
+      isModal: false,
+    };
   }
+
+  checkVisibleModal = () => {
+    if (this.state.isModal) {
+      const widthScroll = window.innerWidth - document.body.offsetWidth;
+
+      document.body.style.cssText = `
+          overflow: hidden;
+          padding-right: ${widthScroll}px;
+      `;
+    } else {
+      document.body.style.cssText = '';
+    }
+  };
+
+  modalClose = async () => {
+    await this.setState({ isModal: false });
+    this.checkVisibleModal();
+  };
+
+  modalOpen = async () => {
+    await this.setState({ isModal: true });
+    this.checkVisibleModal();
+  };
 
   render() {
     const { author, description, publishedAt, title, urlToImage } = this.props;
+    const date: Date = new Date(Date.parse(publishedAt));
 
     return (
-      <Item data-testid="card-item">
-        <CardImage
-          style={{
-            backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
-          }}
-        />
-        <Title>{title}</Title>
-        <Description>{description || 'Sorry, there is no any description'}</Description>
-        <NewsDate>Data: {publishedAt.slice(0, 10)}</NewsDate>
-        <Author>Author: {author || 'unnamed'}</Author>
-      </Item>
+      <>
+        <Item data-testid="card-item" onClick={this.modalOpen}>
+          <CardImage
+            style={{
+              backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
+            }}
+          />
+          <Title>{title}</Title>
+          <Description>{description || 'Sorry, there is no any description'}</Description>
+          <NewsDate>Data: {publishedAt.slice(0, 10)}</NewsDate>
+          <Author>Author: {author || 'unnamed'}</Author>
+        </Item>
+        <Modal visible={this.state.isModal} onClose={this.modalClose}>
+          <InfoWrapper>
+            <NewsImage
+              style={{
+                backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
+              }}
+            />
+            <NewsFullTitle>{title}</NewsFullTitle>
+          </InfoWrapper>
+
+          <NewsFullDescription>
+            {description || 'Sorry, there is no any description'}
+          </NewsFullDescription>
+          <InfoWrapper>
+            <NewsFullDate>{String(date).slice(0, 21)}</NewsFullDate>
+            <NewsFullAuthor>{author || 'unnamed'}</NewsFullAuthor>
+          </InfoWrapper>
+        </Modal>
+      </>
     );
   }
 }
@@ -43,6 +94,7 @@ const Item = styled.li`
 
   &:hover {
     box-shadow: 0 0 15px 0 var(--primary);
+    cursor: pointer;
   }
 `;
 
@@ -101,6 +153,44 @@ const CardImage = styled.div`
   background-position: center;
   background-size: cover;
   border-radius: 10px 10px 0 0;
+`;
+
+const InfoWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const NewsImage = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+`;
+
+const NewsFullTitle = styled.p`
+  width: 66%;
+  font-size: 18px;
+  color: var(--primary);
+  margin: 0 10px;
+  text-transform: uppercase;
+`;
+
+const NewsFullDescription = styled.p`
+  font-size: 14px;
+`;
+
+const NewsFullDate = styled.p`
+  font-size: 14px;
+`;
+
+const NewsFullAuthor = styled.p`
+  font-size: 14px;
 `;
 
 export default Card;

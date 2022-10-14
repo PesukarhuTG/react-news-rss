@@ -15,13 +15,4 @@ describe('About page tests', () => {
     const title = screen.getByText(/About us/i);
     expect(title).toBeInTheDocument();
   });
-
-  test('About page snapshot', () => {
-    const page = render(
-      <BrowserRouter>
-        <About />
-      </BrowserRouter>
-    );
-    expect(page).toMatchSnapshot();
-  });
 });

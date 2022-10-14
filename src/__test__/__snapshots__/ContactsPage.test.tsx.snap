@@ -45,10 +45,10 @@ Object {
           </nav>
         </header>
         <div
-          class="sc-llJcti gcQQGp"
+          class="sc-ikZpkk huWLzp"
         >
           <h2
-            class="sc-iIPllB eKoJl"
+            class="sc-jIZahH hEBPZb"
           >
             Contact us via form
           </h2>
@@ -220,7 +220,7 @@ Object {
           </form>
         </div>
         <p
-          class="sc-gicCDI hyttfp"
+          class="sc-himrzO ccMnlF"
           data-testid="form-message"
         />
       </div>
@@ -267,10 +267,10 @@ Object {
         </nav>
       </header>
       <div
-        class="sc-llJcti gcQQGp"
+        class="sc-ikZpkk huWLzp"
       >
         <h2
-          class="sc-iIPllB eKoJl"
+          class="sc-jIZahH hEBPZb"
         >
           Contact us via form
         </h2>
@@ -442,7 +442,7 @@ Object {
         </form>
       </div>
       <p
-        class="sc-gicCDI hyttfp"
+        class="sc-himrzO ccMnlF"
         data-testid="form-message"
       />
     </div>
