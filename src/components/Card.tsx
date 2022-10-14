@@ -39,7 +39,7 @@ class Card extends React.Component<CardProps, State> {
   };
 
   render() {
-    const { author, description, publishedAt, title, urlToImage } = this.props;
+    const { author, description, publishedAt, title, urlToImage, url } = this.props;
     const date: Date = new Date(Date.parse(publishedAt));
 
     return (
@@ -68,6 +68,9 @@ class Card extends React.Component<CardProps, State> {
           <NewsFullDescription>
             {description || 'Sorry, there is no any description'}
           </NewsFullDescription>
+          <LinkToFullNews href={url} target={'_blank'}>
+            Link to full news ►
+          </LinkToFullNews>
           <InfoWrapper>
             <NewsFullDate>{String(date).slice(0, 21)}</NewsFullDate>
             <NewsFullAuthor>{author || 'unnamed'}</NewsFullAuthor>
@@ -191,6 +194,13 @@ const NewsFullDate = styled.p`
 
 const NewsFullAuthor = styled.p`
   font-size: 14px;
+`;
+
+const LinkToFullNews = styled.a`
+  display: block;
+  margin: 10px 0;
+  font-size: 14px;
+  color: var(--primary);
 `;
 
 export default Card;
