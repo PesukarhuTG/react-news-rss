@@ -33,16 +33,17 @@ const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 99;
 `;
 
 const ModalOverlay = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: var(--modal-background);
-  z-index: 4;
+  z-index: 100;
 `;
 
 const ModalWindow = styled.div`
@@ -59,7 +60,7 @@ const ModalWindow = styled.div`
   border: 1px solid var(--primary);
   background-color: var(--main-background);
   border-radius: 20px;
-  z-index: 5;
+  z-index: 101;
 `;
 
 const ButtonClose = styled.button`
