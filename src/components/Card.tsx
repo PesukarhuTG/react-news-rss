@@ -55,6 +55,7 @@ class Card extends React.Component<CardProps, State> {
           <NewsDate>Data: {publishedAt.slice(0, 10)}</NewsDate>
           <Author>Author: {author || 'unnamed'}</Author>
         </Item>
+
         <Modal visible={this.state.isModal} onClose={this.modalClose}>
           <InfoWrapper>
             <NewsImage

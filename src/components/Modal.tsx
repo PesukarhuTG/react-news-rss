@@ -2,13 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 import closeIcon from '../assets/svg/close-icon.svg';
 
-export interface ModalProps {
+interface ModalProps {
   visible?: boolean;
   children?: React.ReactNode;
   onClose?: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ visible = false, children, onClose = () => {} }) => {
+class Modal extends React.Component<ModalProps> {
+  constructor(props: ModalProps) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <>
+        {this.props.visible && (
+          <ModalContainer>
+            <ModalOverlay onClick={this.props.onClose}></ModalOverlay>
+            <ModalWindow>
+              <ButtonClose onClick={this.props.onClose} />
+              <ModalMessage>{this.props.children}</ModalMessage>
+            </ModalWindow>
+          </ModalContainer>
+        )}
+      </>
+    );
+  }
+}
+
+/*const Modal: React.FC<ModalProps> = ({ visible = false, children, onClose = () => {} }) => {
   return (
     <>
       {visible && (
@@ -22,7 +44,7 @@ const Modal: React.FC<ModalProps> = ({ visible = false, children, onClose = () =
       )}
     </>
   );
-};
+};*/
 
 const ModalContainer = styled.div`
   position: fixed;
