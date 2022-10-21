@@ -5,7 +5,7 @@ import { Spin } from 'antd';
 const Spinner = () => {
   return (
     <SpinnerWrapper>
-      <StyledSpin size="large" />
+      <StyledSpin size="large" data-testid="spinner-test" />
     </SpinnerWrapper>
   );
 };

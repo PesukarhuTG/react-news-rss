@@ -15,15 +15,13 @@ class MainPage extends React.Component<State> {
     news: [],
   };
 
-  checkData() {
+  async checkData(): Promise<void> {
     if (this.state.value) {
-      searchNews(this.state.value).then((resp) => {
-        this.setState({ news: resp.articles });
-      });
+      const articles = await searchNews(this.state.value).then((resp) => resp.articles);
+      this.setState({ news: articles });
     } else {
-      getNews().then((resp) => {
-        this.setState({ news: resp.articles });
-      });
+      const articles = await getNews().then((resp) => resp.articles);
+      this.setState({ news: articles });
     }
   }
 
@@ -31,7 +29,7 @@ class MainPage extends React.Component<State> {
     this.checkData();
   }
 
-  onSubmit = (data: CardProps[]) => {
+  onSubmit = (data: CardProps[]): void => {
     this.setState({ news: data });
   };
 

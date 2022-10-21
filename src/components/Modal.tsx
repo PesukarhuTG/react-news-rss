@@ -18,9 +18,9 @@ class Modal extends React.Component<ModalProps> {
       <>
         {this.props.visible && (
           <ModalContainer>
-            <ModalOverlay onClick={this.props.onClose}></ModalOverlay>
+            <ModalOverlay onClick={this.props.onClose} data-testid="modal-wrapper"></ModalOverlay>
             <ModalWindow>
-              <ButtonClose onClick={this.props.onClose} />
+              <ButtonClose onClick={this.props.onClose} data-testid="modal-close" />
               <ModalMessage>{this.props.children}</ModalMessage>
             </ModalWindow>
           </ModalContainer>
@@ -29,22 +29,6 @@ class Modal extends React.Component<ModalProps> {
     );
   }
 }
-
-/*const Modal: React.FC<ModalProps> = ({ visible = false, children, onClose = () => {} }) => {
-  return (
-    <>
-      {visible && (
-        <ModalContainer>
-          <ModalOverlay onClick={onClose}></ModalOverlay>
-          <ModalWindow>
-            <ButtonClose onClick={onClose} />
-            <ModalMessage>{children}</ModalMessage>
-          </ModalWindow>
-        </ModalContainer>
-      )}
-    </>
-  );
-};*/
 
 const ModalContainer = styled.div`
   position: fixed;

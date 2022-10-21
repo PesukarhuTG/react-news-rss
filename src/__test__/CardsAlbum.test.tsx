@@ -12,6 +12,7 @@ describe('CardsAlbum tests', () => {
         description: 'There will be some awesome info',
         publishedAt: '2022-10-02',
         urlToImage: '../assets/img/no-poster.jpg',
+        url: 'https://someSite.ru',
       },
       {
         author: 'John',
@@ -19,6 +20,7 @@ describe('CardsAlbum tests', () => {
         description: 'There will be some awesome info',
         publishedAt: '2022-10-03',
         urlToImage: '../assets/img/no-poster.jpg',
+        url: 'https://someSite.ru',
       },
     ];
 
@@ -26,11 +28,21 @@ describe('CardsAlbum tests', () => {
     expect(screen.getByRole('list')).toBeInTheDocument();
     const text = await screen.findByText(/Hot cakes/i);
     expect(text).toBeInTheDocument();
+
+    const cards = screen.queryAllByTestId('card-item');
+    expect(cards.length).toBe(2);
   });
 
   test('if we dont get any data', () => {
     render(<CardsAlbum cards={[]} />);
+
     const text = screen.queryByText('Author');
     expect(text).toBeNull();
+
+    const cards = screen.queryAllByTestId('card-item');
+    expect(cards.length).toEqual(0);
+
+    const spinner = screen.queryAllByTestId('spinner-test');
+    expect(spinner).toBeInTheDocument;
   });
 });

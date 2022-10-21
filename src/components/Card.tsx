@@ -15,7 +15,7 @@ class Card extends React.Component<CardProps, State> {
     };
   }
 
-  checkVisibleModal = () => {
+  checkVisibleModal = (): void => {
     if (this.state.isModal) {
       const widthScroll = window.innerWidth - document.body.offsetWidth;
 
@@ -65,7 +65,6 @@ class Card extends React.Component<CardProps, State> {
             />
             <NewsFullTitle>{title}</NewsFullTitle>
           </InfoWrapper>
-
           <NewsFullDescription>
             {description || 'Sorry, there is no any description'}
           </NewsFullDescription>

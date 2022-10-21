@@ -80,10 +80,6 @@ button[disabled]:hover {
   color: var(--primary);
 }
 
-.active-link {
-  color: var(--primary);
-}
-
 /* FORM CSS */
 
 form {
@@ -108,10 +104,6 @@ form {
 input {
   padding: 5px;
   border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
   border: 0;
 }
 
@@ -139,10 +131,6 @@ input[type='checkbox'] {
 .btn-submit {
   background-color: var(--primary);
   border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
   font-size: 14px;
   border: 0;
   padding: 10px;

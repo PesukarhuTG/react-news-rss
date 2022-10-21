@@ -24,7 +24,7 @@ class SearchPanel extends React.Component<SearchProps, State> {
     };
   }
 
-  onChange(searchValue: string) {
+  onChange(searchValue: string): void {
     this.setState({ value: searchValue });
   }
 
@@ -43,7 +43,7 @@ class SearchPanel extends React.Component<SearchProps, State> {
     }
   }
 
-  handleSubmit = () => {
+  handleSubmit = (): void => {
     if (this.state.value) {
       searchNews(this.state.value).then((resp) => {
         this.props.onSearch(resp.articles);

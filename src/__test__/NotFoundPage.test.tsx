@@ -26,4 +26,13 @@ describe('NotFound page tests', () => {
     const homeLink = screen.getByText(/back home/i);
     expect(homeLink).toBeInTheDocument();
   });
+
+  test('NotFound page snapshot', () => {
+    const page = render(
+      <BrowserRouter>
+        <NotFound />
+      </BrowserRouter>
+    );
+    expect(page).toMatchSnapshot();
+  });
 });

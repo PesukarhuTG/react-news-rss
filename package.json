@@ -52,7 +52,8 @@
   "devDependencies": {
     "@testing-library/dom": "^8.18.1",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/styled-components": "^5.1.26"
+    "@testing-library/user-event": "^13.5.0",
+    "@types/styled-components": "^5.1.26",
+    "msw": "^0.47.4"
   }
 }

@@ -4,6 +4,8 @@ import '@testing-library/jest-dom/extend-expect';
 import { LoginForm } from '../components';
 
 describe('Form tests', () => {
+  global.URL.createObjectURL = jest.fn();
+
   test('render Form', () => {
     render(<LoginForm onSubmit={() => {}} />);
     expect(screen.getByTestId('form')).toBeInTheDocument();
@@ -12,11 +14,6 @@ describe('Form tests', () => {
   test('render Form inputs on page', () => {
     render(<LoginForm onSubmit={() => {}} />);
     expect(screen.getByTestId('input-file')).toBeInTheDocument();
-  });
-
-  test('Form snapshot', () => {
-    const form = render(<LoginForm onSubmit={() => {}} />);
-    expect(form).toMatchSnapshot();
   });
 
   test('input name: check form value', () => {
@@ -41,10 +38,10 @@ describe('Form tests', () => {
     expect(input[1].value).toBe('woman');
   });
 
-  test('input data: check render', () => {
+  test('input date: check render', () => {
     render(<LoginForm onSubmit={() => {}} />);
 
-    const input = screen.getByTestId('input-fdata');
+    const input = screen.getByTestId('input-fdate');
     expect(input).toBeInTheDocument();
     fireEvent.input(input, {
       target: { value: '2022-01-01' },
@@ -52,7 +49,7 @@ describe('Form tests', () => {
     expect(input).toHaveValue('2022-01-01');
   });
 
-  test('Upload Files', async () => {
+  test('input file: upload file', async () => {
     render(<LoginForm onSubmit={() => {}} />);
 
     const fakeFile = new File(['hello'], 'hello.png', { type: 'image/png' });
@@ -68,6 +65,7 @@ describe('Form tests', () => {
 
     if (inputFile.files instanceof FileList) {
       expect(inputFile.files[0]).toStrictEqual(fakeFile);
+      expect(inputFile.files).toHaveLength(1);
     }
   });
 
@@ -100,5 +98,52 @@ describe('Form tests', () => {
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass('btn-submit');
     expect(button).toBeDisabled();
+  });
+
+  test('clear form after submit', async () => {
+    render(<LoginForm onSubmit={() => {}} />);
+
+    const inputName = await screen.getByTestId('input-fname');
+    const inputDate = await screen.getByTestId('input-fdate');
+    const inputSelect = await screen.getByTestId('input-fcity');
+    const checkbox = screen.getByTestId('input-faccept');
+    const submitButton = await screen.getByTestId('btn-submit');
+
+    expect(inputName).toHaveValue('');
+    expect(inputDate).toHaveValue('');
+    expect(inputSelect).toHaveValue('');
+    expect(checkbox).not.toBeChecked();
+
+    fireEvent.change(inputName, {
+      target: { value: 'Tatiana' },
+    });
+
+    fireEvent.change(inputDate, {
+      target: { value: '2022-10-10' },
+    });
+
+    fireEvent.change(inputSelect, {
+      target: { value: 'Saint-Petersburg' },
+    });
+
+    fireEvent.click(checkbox);
+
+    expect(inputName).toHaveValue('Tatiana');
+    expect(inputDate).toHaveValue('2022-10-10');
+    expect(inputSelect).toHaveValue('Saint-Petersburg');
+    expect(checkbox).toBeChecked();
+
+    await waitFor(async () => {
+      fireEvent.click(submitButton);
+    });
+
+    const checkClearForm = () => {
+      expect(inputName).toHaveValue('');
+      expect(inputDate).toHaveValue('');
+      expect(inputSelect).toHaveValue('');
+      expect(checkbox).not.toBeChecked();
+    };
+
+    setTimeout(checkClearForm, 1000);
   });
 });

@@ -19,20 +19,20 @@ class FormCard extends React.Component<FormProps> {
         />
         <Description>
           <Name>{name}</Name>
-          <BirthdayData>
+          <p>
             <strong>Birthday: </strong>
             {birthday}
-          </BirthdayData>
-          <GenderData>
+          </p>
+          <p>
             <strong>Gender: </strong>
             <span style={{ color: `${gender === 'man' ? 'var(--primary)' : 'var(--gender-w)'}` }}>
               {gender}
             </span>
-          </GenderData>
-          <CityData>
+          </p>
+          <p>
             <strong>City: </strong>
             {city}
-          </CityData>
+          </p>
         </Description>
       </Item>
     );
@@ -58,6 +58,7 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  font-size: 14px;
 `;
 
 const Name = styled.p`
@@ -65,18 +66,6 @@ const Name = styled.p`
   font-weight: 700;
   color: var(--primary);
   text-transform: uppercase;
-`;
-
-const BirthdayData = styled.span`
-  font-size: 14px;
-`;
-
-const GenderData = styled.span`
-  font-size: 14px;
-`;
-
-const CityData = styled.p`
-  font-size: 14px;
 `;
 
 const CardImage = styled.div`

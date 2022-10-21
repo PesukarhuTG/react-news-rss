@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 class Header extends React.Component {
-  activeClassName = 'active-link';
-
   render() {
     return (
       <AppHeader>
@@ -13,28 +11,15 @@ class Header extends React.Component {
         </NavLink>
 
         <HeaderNav>
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? this.activeClassName : undefined)}
-            data-testid="mainpage-link"
-            end
-          >
+          <HeaderNavLink to="/" data-testid="mainpage-link" end>
             Home
-          </NavLink>
-          <NavLink
-            to="/about"
-            className={({ isActive }) => (isActive ? this.activeClassName : undefined)}
-            data-testid="aboutpage-link"
-          >
+          </HeaderNavLink>
+          <HeaderNavLink to="/about" data-testid="aboutpage-link">
             About
-          </NavLink>
-          <NavLink
-            to="/contacts"
-            className={({ isActive }) => (isActive ? this.activeClassName : undefined)}
-            data-testid="contactspage-link"
-          >
+          </HeaderNavLink>
+          <HeaderNavLink to="/contacts" data-testid="contactspage-link">
             Contacts
-          </NavLink>
+          </HeaderNavLink>
         </HeaderNav>
       </AppHeader>
     );
@@ -52,6 +37,18 @@ const HeaderNav = styled.nav`
   display: flex;
   margin-left: auto;
   gap: 30px;
+`;
+
+const HeaderNavLink = styled(NavLink)`
+  transition: 0.3s all;
+
+  &:hover {
+    color: var(--primary);
+  }
+
+  &.active {
+    color: var(--primary);
+  }
 `;
 
 export default Header;
