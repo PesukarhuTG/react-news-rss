@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Input } from 'antd';
 import CardProps from '../types/Card';
@@ -10,65 +10,52 @@ interface SearchProps {
   onSearch: (data: CardProps[]) => void;
 }
 
-interface State {
-  value?: string;
-  news?: CardProps[];
-}
+const SearchPanel: React.FC<SearchProps> = ({ onSearch }) => {
+  const [value, setValue] = useState<string>('');
+  const valRef = useRef(value);
 
-class SearchPanel extends React.Component<SearchProps, State> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      value: '',
-      news: [],
-    };
-  }
+  const onChange = (searchValue: string): void => {
+    setValue(searchValue);
+  };
 
-  onChange(searchValue: string): void {
-    this.setState({ value: searchValue });
-  }
-
-  componentDidMount(): void {
-    const value = localStorage.getItem('searchData');
+  const handleSubmit = (): void => {
     if (value) {
-      this.setState({ value });
-    }
-  }
-
-  componentWillUnmount(): void {
-    if (this.state.value?.length) {
-      localStorage.setItem('searchData', this.state.value);
-    } else {
-      localStorage.setItem('searchData', '');
-    }
-  }
-
-  handleSubmit = (): void => {
-    if (this.state.value) {
-      searchNews(this.state.value).then((resp) => {
-        this.props.onSearch(resp.articles);
+      searchNews(value).then((resp) => {
+        onSearch(resp.articles);
       });
     } else {
       getNews().then((resp) => {
-        this.props.onSearch(resp.articles);
+        onSearch(resp.articles);
       });
     }
   };
 
-  render() {
-    return (
-      <StyledSearch
-        placeholder="Search..."
-        onChange={(e) => this.onChange(e.target.value)}
-        onSearch={this.handleSubmit}
-        value={this.state.value}
-        data-testid="input-search"
-        allowClear
-        enterButton
-      />
-    );
-  }
-}
+  useEffect(() => {
+    valRef.current = value;
+  }, [value]);
+
+  useEffect(() => {
+    const value = localStorage.getItem('searchData');
+    if (value) {
+      setValue(value);
+    }
+    return () => {
+      localStorage.setItem('searchData', valRef.current);
+    };
+  }, []);
+
+  return (
+    <StyledSearch
+      placeholder="Search..."
+      onChange={(e) => onChange(e.target.value)}
+      onSearch={handleSubmit}
+      value={value}
+      data-testid="input-search"
+      allowClear
+      enterButton
+    />
+  );
+};
 
 const StyledSearch = styled(Search)`
   display: block;

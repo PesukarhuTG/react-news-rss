@@ -1,4 +1,4 @@
 export { default as MainPage } from './MainPage';
-export { default as About } from './About';
+export { default as AboutPage } from './AboutPage';
 export { default as NotFound } from './NotFound';
-export { default as Contacts } from './Contacts';
+export { default as FormPage } from './FormPage';

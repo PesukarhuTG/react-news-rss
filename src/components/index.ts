@@ -3,7 +3,7 @@ export { default as Header } from './Header';
 export { default as SearchPanel } from './Search';
 export { default as CardsAlbum } from './CardsAlbum';
 export { default as Card } from './Card';
-export { default as LoginForm } from './Form';
+export { default as Form } from './Form';
 export { default as FormCard } from './FormCard';
 export { default as FormCardsAlbum } from './FormCardsAlbum';
 export { default as Spinner } from './Spinner';

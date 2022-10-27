@@ -2,42 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 import FormProps from '../types/Form';
 
-class FormCard extends React.Component<FormProps> {
-  constructor(props: FormProps) {
-    super(props);
-  }
-
-  render() {
-    const { name, birthday, city, gender, file } = this.props;
-
-    return (
-      <Item data-testid="form-card">
-        <CardImage
-          style={{
-            backgroundImage: `url(${file})`,
-          }}
-        />
-        <Description>
-          <Name>{name}</Name>
-          <p>
-            <strong>Birthday: </strong>
-            {birthday}
-          </p>
-          <p>
-            <strong>Gender: </strong>
-            <span style={{ color: `${gender === 'man' ? 'var(--primary)' : 'var(--gender-w)'}` }}>
-              {gender}
-            </span>
-          </p>
-          <p>
-            <strong>City: </strong>
-            {city}
-          </p>
-        </Description>
-      </Item>
-    );
-  }
-}
+const FormCard: React.FC<FormProps> = ({ name, birthday, city, gender, file }) => {
+  return (
+    <Item data-testid="form-card">
+      <CardImage
+        style={{
+          backgroundImage: `url(${file})`,
+        }}
+      />
+      <Description>
+        <Name>{name}</Name>
+        <p>
+          <strong>Birthday: </strong>
+          {birthday}
+        </p>
+        <p>
+          <strong>Gender: </strong>
+          <span style={{ color: `${gender === 'man' ? 'var(--primary)' : 'var(--gender-w)'}` }}>
+            {gender}
+          </span>
+        </p>
+        <p>
+          <strong>City: </strong>
+          {city}
+        </p>
+      </Description>
+    </Item>
+  );
+};
 
 const Item = styled.li`
   display: flex;

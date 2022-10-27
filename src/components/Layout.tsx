@@ -6,16 +6,14 @@ interface LayoutProps {
   children?: React.ReactNode;
 }
 
-class Layout extends React.Component<LayoutProps> {
-  render() {
-    return (
-      <Container data-testid="layout-container">
-        {<Header />}
-        {this.props.children}
-      </Container>
-    );
-  }
-}
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  return (
+    <Container data-testid="layout-container">
+      {<Header />}
+      {children}
+    </Container>
+  );
+};
 
 const Container = styled.div`
   max-width: 1440px;

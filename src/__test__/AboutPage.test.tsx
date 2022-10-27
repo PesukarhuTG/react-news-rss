@@ -2,13 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
-import { About } from '../pages';
+import { AboutPage } from '../pages';
 
 describe('About page tests', () => {
   test('render About page', () => {
     render(
       <BrowserRouter>
-        <About />
+        <AboutPage />
       </BrowserRouter>
     );
 

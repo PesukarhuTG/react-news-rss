@@ -4,30 +4,20 @@ import FormProps from '../types/Form';
 import FormCard from './FormCard';
 
 interface CardListProps {
-  list?: FormProps[];
+  list: FormProps[];
 }
 
-class FormCardsAlbum extends React.Component<CardListProps> {
-  constructor(props: CardListProps) {
-    super(props);
-  }
-
-  render() {
-    if (!this.props.list?.length) {
-      return;
-    }
-
-    const { list } = this.props;
-
-    return (
-      <Album>
-        {list.map((item: FormProps, index: number) => {
-          return <FormCard {...item} key={index} />;
-        })}
-      </Album>
-    );
-  }
-}
+const FormCardsAlbum: React.FC<CardListProps> = ({ list }) => {
+  return (
+    <Album>
+      {list.length
+        ? list.map((item: FormProps, index: number) => {
+            return <FormCard {...item} key={index} />;
+          })
+        : null}
+    </Album>
+  );
+};
 
 const Album = styled.ul`
   margin: 20px auto;

@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CardProps from '../types/Card';
 import { Modal } from './index';
 
-interface State {
-  isModal?: boolean;
-}
+const Card: React.FC<CardProps> = ({
+  author,
+  description,
+  publishedAt,
+  title,
+  urlToImage,
+  url,
+}) => {
+  const [isModal, setIsModal] = useState<boolean>(false);
+  const date: Date = new Date(Date.parse(publishedAt));
 
-class Card extends React.Component<CardProps, State> {
-  constructor(props: CardProps) {
-    super(props);
-    this.state = {
-      isModal: false,
-    };
-  }
-
-  checkVisibleModal = (): void => {
-    if (this.state.isModal) {
+  useEffect(() => {
+    if (isModal) {
       const widthScroll = window.innerWidth - document.body.offsetWidth;
 
       document.body.style.cssText = `
@@ -26,60 +25,49 @@ class Card extends React.Component<CardProps, State> {
     } else {
       document.body.style.cssText = '';
     }
+  }, [isModal]);
+
+  const toggleModal = () => {
+    setIsModal(!isModal);
   };
 
-  modalClose = async () => {
-    await this.setState({ isModal: false });
-    this.checkVisibleModal();
-  };
+  return (
+    <>
+      <Item data-testid="card-item" onClick={toggleModal}>
+        <CardImage
+          style={{
+            backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
+          }}
+        />
+        <Title>{title}</Title>
+        <Description>{description || 'Sorry, there is no any description'}</Description>
+        <NewsDate>Data: {publishedAt.slice(0, 10)}</NewsDate>
+        <Author>Author: {author || 'unnamed'}</Author>
+      </Item>
 
-  modalOpen = async () => {
-    await this.setState({ isModal: true });
-    this.checkVisibleModal();
-  };
-
-  render() {
-    const { author, description, publishedAt, title, urlToImage, url } = this.props;
-    const date: Date = new Date(Date.parse(publishedAt));
-
-    return (
-      <>
-        <Item data-testid="card-item" onClick={this.modalOpen}>
-          <CardImage
+      <Modal visible={isModal} onClose={toggleModal}>
+        <InfoWrapper>
+          <NewsImage
             style={{
               backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
             }}
           />
-          <Title>{title}</Title>
-          <Description>{description || 'Sorry, there is no any description'}</Description>
-          <NewsDate>Data: {publishedAt.slice(0, 10)}</NewsDate>
-          <Author>Author: {author || 'unnamed'}</Author>
-        </Item>
-
-        <Modal visible={this.state.isModal} onClose={this.modalClose}>
-          <InfoWrapper>
-            <NewsImage
-              style={{
-                backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
-              }}
-            />
-            <NewsFullTitle>{title}</NewsFullTitle>
-          </InfoWrapper>
-          <NewsFullDescription>
-            {description || 'Sorry, there is no any description'}
-          </NewsFullDescription>
-          <LinkToFullNews href={url} target={'_blank'}>
-            Link to full news ►
-          </LinkToFullNews>
-          <InfoWrapper>
-            <NewsFullDate>{String(date).slice(0, 21)}</NewsFullDate>
-            <NewsFullAuthor>{author || 'unnamed'}</NewsFullAuthor>
-          </InfoWrapper>
-        </Modal>
-      </>
-    );
-  }
-}
+          <NewsFullTitle>{title}</NewsFullTitle>
+        </InfoWrapper>
+        <NewsFullDescription>
+          {description || 'Sorry, there is no any description'}
+        </NewsFullDescription>
+        <LinkToFullNews href={url} target={'_blank'}>
+          Link to full news ►
+        </LinkToFullNews>
+        <InfoWrapper>
+          <NewsFullDate>{String(date).slice(0, 21)}</NewsFullDate>
+          <NewsFullAuthor>{author || 'unnamed'}</NewsFullAuthor>
+        </InfoWrapper>
+      </Modal>
+    </>
+  );
+};
 
 const Item = styled.li`
   display: flex;

@@ -3,19 +3,17 @@ import styled from 'styled-components';
 import { Layout } from '../components';
 import { Link } from 'react-router-dom';
 
-class NotFound extends React.Component {
-  render() {
-    return (
-      <Layout>
-        <Wrapper>
-          <Title>404</Title>
-          <Description>sorry, page not found</Description>
-          <HomeLink to="/">► back home</HomeLink>
-        </Wrapper>
-      </Layout>
-    );
-  }
-}
+const NotFound: React.FC = () => {
+  return (
+    <Layout>
+      <Wrapper>
+        <Title>404</Title>
+        <Description>sorry, page not found</Description>
+        <HomeLink to="/">► back home</HomeLink>
+      </Wrapper>
+    </Layout>
+  );
+};
 
 const Wrapper = styled.div`
   margin: auto;

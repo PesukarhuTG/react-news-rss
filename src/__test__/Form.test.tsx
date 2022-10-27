@@ -1,23 +1,23 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { LoginForm } from '../components';
+import { Form } from '../components';
 
 describe('Form tests', () => {
   global.URL.createObjectURL = jest.fn();
 
   test('render Form', () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
     expect(screen.getByTestId('form')).toBeInTheDocument();
   });
 
   test('render Form inputs on page', () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
     expect(screen.getByTestId('input-file')).toBeInTheDocument();
   });
 
   test('input name: check form value', () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
 
     const input = screen.getByTestId('input-fname');
     expect(input).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('Form tests', () => {
   });
 
   test('input radio: check render', () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
 
     const input = screen.getAllByRole('radio') as HTMLInputElement[];
     expect(input[0]).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('Form tests', () => {
   });
 
   test('input date: check render', () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
 
     const input = screen.getByTestId('input-fdate');
     expect(input).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('Form tests', () => {
   });
 
   test('input file: upload file', async () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
 
     const fakeFile = new File(['hello'], 'hello.png', { type: 'image/png' });
     const inputFile = screen.getByTestId('input-file') as HTMLInputElement;
@@ -70,7 +70,7 @@ describe('Form tests', () => {
   });
 
   test('input checkbox: check render', () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
 
     const checkbox = screen.getByTestId('input-faccept');
     expect(checkbox).toBeInTheDocument();
@@ -80,7 +80,7 @@ describe('Form tests', () => {
   });
 
   test('select: check render', () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
 
     const select = screen.getByTestId('input-fcity') as HTMLSelectElement;
 
@@ -93,7 +93,7 @@ describe('Form tests', () => {
   });
 
   test('render submit button', () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
     const button = screen.getByTestId('btn-submit');
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass('btn-submit');
@@ -101,7 +101,7 @@ describe('Form tests', () => {
   });
 
   test('clear form after submit', async () => {
-    render(<LoginForm onSubmit={() => {}} />);
+    render(<Form onSubmit={() => {}} />);
 
     const inputName = await screen.getByTestId('input-fname');
     const inputDate = await screen.getByTestId('input-fdate');

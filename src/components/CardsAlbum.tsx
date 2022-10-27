@@ -7,35 +7,21 @@ interface CardListProps {
   cards?: CardProps[];
 }
 
-interface State {
-  isModal?: boolean;
-}
-
-class CardsAlbum extends React.Component<CardListProps, State> {
-  constructor(props: CardListProps) {
-    super(props);
-    this.state = {
-      isModal: false,
-    };
+const CardsAlbum: React.FC<CardListProps> = ({ cards }) => {
+  if (!cards?.length) {
+    return <Spinner />;
   }
 
-  render() {
-    if (!this.props.cards?.length) {
-      return <Spinner />;
-    }
+  cards.length = 20;
 
-    const { cards } = this.props;
-    cards.length = 20;
-
-    return (
-      <Album>
-        {cards.map((item: CardProps, index: number) => {
-          return <Card {...item} key={index} />;
-        })}
-      </Album>
-    );
-  }
-}
+  return (
+    <Album>
+      {cards.map((item: CardProps, index: number) => {
+        return <Card {...item} key={index} />;
+      })}
+    </Album>
+  );
+};
 
 const Album = styled.ul`
   margin: 0 auto;

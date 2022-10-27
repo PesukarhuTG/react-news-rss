@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
-import { MainPage, About, NotFound } from '../pages';
+import { MainPage, AboutPage, NotFound } from '../pages';
 import App from '../App';
 
 describe('App tests', () => {
@@ -34,7 +34,7 @@ describe('App tests', () => {
       <MemoryRouter initialEntries={['/somepage']}>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MemoryRouter>

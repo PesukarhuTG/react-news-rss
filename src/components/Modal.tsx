@@ -8,27 +8,21 @@ interface ModalProps {
   onClose?: () => void;
 }
 
-class Modal extends React.Component<ModalProps> {
-  constructor(props: ModalProps) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <>
-        {this.props.visible && (
-          <ModalContainer>
-            <ModalOverlay onClick={this.props.onClose} data-testid="modal-wrapper"></ModalOverlay>
-            <ModalWindow>
-              <ButtonClose onClick={this.props.onClose} data-testid="modal-close" />
-              <ModalMessage>{this.props.children}</ModalMessage>
-            </ModalWindow>
-          </ModalContainer>
-        )}
-      </>
-    );
-  }
-}
+const Modal: React.FC<ModalProps> = ({ visible = false, children, onClose = () => {} }) => {
+  return (
+    <>
+      {visible && (
+        <ModalContainer>
+          <ModalOverlay onClick={onClose} data-testid="modal-wrapper"></ModalOverlay>
+          <ModalWindow>
+            <ButtonClose onClick={onClose} data-testid="modal-close" />
+            <ModalMessage>{children}</ModalMessage>
+          </ModalWindow>
+        </ModalContainer>
+      )}
+    </>
+  );
+};
 
 const ModalContainer = styled.div`
   position: fixed;

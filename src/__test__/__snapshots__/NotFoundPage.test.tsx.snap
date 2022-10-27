@@ -39,28 +39,28 @@ Object {
             </a>
             <a
               class="sc-dkzDqf hANaiY"
-              data-testid="contactspage-link"
-              href="/contacts"
+              data-testid="formpage-link"
+              href="/form"
             >
-              Contacts
+              Form
             </a>
           </nav>
         </header>
         <div
-          class="sc-ikZpkk bOKjHF"
+          class="sc-himrzO bmSeJK"
         >
           <h2
-            class="sc-jIZahH bwzTQd"
+            class="sc-gXmSlM cilQZh"
           >
             404
           </h2>
           <p
-            class="sc-himrzO ccoDAf"
+            class="sc-cCsOjp deSQi"
           >
             sorry, page not found
           </p>
           <a
-            class="sc-gXmSlM gMytiZ"
+            class="sc-ciZhAO eJZTqf"
             href="/"
           >
             ► back home
@@ -104,28 +104,28 @@ Object {
           </a>
           <a
             class="sc-dkzDqf hANaiY"
-            data-testid="contactspage-link"
-            href="/contacts"
+            data-testid="formpage-link"
+            href="/form"
           >
-            Contacts
+            Form
           </a>
         </nav>
       </header>
       <div
-        class="sc-ikZpkk bOKjHF"
+        class="sc-himrzO bmSeJK"
       >
         <h2
-          class="sc-jIZahH bwzTQd"
+          class="sc-gXmSlM cilQZh"
         >
           404
         </h2>
         <p
-          class="sc-himrzO ccoDAf"
+          class="sc-cCsOjp deSQi"
         >
           sorry, page not found
         </p>
         <a
-          class="sc-gXmSlM gMytiZ"
+          class="sc-ciZhAO eJZTqf"
           href="/"
         >
           ► back home
