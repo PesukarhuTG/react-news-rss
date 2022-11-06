@@ -7,6 +7,16 @@ import { MainPage, AboutPage, NotFound } from '../pages';
 import App from '../App';
 
 describe('App tests', () => {
+  window.matchMedia =
+    window.matchMedia ||
+    function () {
+      return {
+        matches: false,
+        addListener: function () {},
+        removeListener: function () {},
+      };
+    };
+
   test('render /home link', () => {
     render(
       <BrowserRouter>

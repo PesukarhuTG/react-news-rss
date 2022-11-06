@@ -9,14 +9,14 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Container data-testid="layout-container">
-      {<Header />}
+      <Header />
       {children}
     </Container>
   );
 };
 
 const Container = styled.div`
-  max-width: 1440px;
+  max-width: var(--container-width);
   width: 100%;
   min-height: 100vh;
   margin: 0 auto;

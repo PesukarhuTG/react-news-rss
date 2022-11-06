@@ -8,13 +8,13 @@ interface CardListProps {
 }
 
 const FormCardsAlbum: React.FC<CardListProps> = ({ list }) => {
+  if (!list.length) return null;
+
   return (
     <Album>
-      {list.length
-        ? list.map((item: FormProps, index: number) => {
-            return <FormCard {...item} key={index} />;
-          })
-        : null}
+      {list.map((item: FormProps, index: number) => {
+        return <FormCard {...item} key={index} />;
+      })}
     </Album>
   );
 };

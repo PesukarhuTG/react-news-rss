@@ -1,71 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import CardProps from '../types/Card';
-import { Modal } from './index';
+import useNewsContext from '../store/Context';
 
-const Card: React.FC<CardProps> = ({
-  author,
-  description,
-  publishedAt,
-  title,
-  urlToImage,
-  url,
-}) => {
-  const [isModal, setIsModal] = useState<boolean>(false);
-  const date: Date = new Date(Date.parse(publishedAt));
+interface Props {
+  item: CardProps;
+  index: number;
+}
 
-  useEffect(() => {
-    if (isModal) {
-      const widthScroll = window.innerWidth - document.body.offsetWidth;
+const Card: React.FC<Props> = ({ item, index }) => {
+  const { setSavedCardData, setDisableCurrentPosition } = useNewsContext();
+  const { author, description, publishedAt, title, urlToImage, url } = item;
 
-      document.body.style.cssText = `
-          overflow: hidden;
-          padding-right: ${widthScroll}px;
-      `;
-    } else {
-      document.body.style.cssText = '';
-    }
-  }, [isModal]);
-
-  const toggleModal = () => {
-    setIsModal(!isModal);
+  const showSeparatePage = () => {
+    setSavedCardData({ author, description, publishedAt, title, urlToImage, url, index });
+    setDisableCurrentPosition(false);
   };
 
   return (
-    <>
-      <Item data-testid="card-item" onClick={toggleModal}>
-        <CardImage
-          style={{
-            backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
-          }}
-        />
-        <Title>{title}</Title>
-        <Description>{description || 'Sorry, there is no any description'}</Description>
-        <NewsDate>Data: {publishedAt.slice(0, 10)}</NewsDate>
-        <Author>Author: {author || 'unnamed'}</Author>
-      </Item>
-
-      <Modal visible={isModal} onClose={toggleModal}>
-        <InfoWrapper>
-          <NewsImage
-            style={{
-              backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
-            }}
-          />
-          <NewsFullTitle>{title}</NewsFullTitle>
-        </InfoWrapper>
-        <NewsFullDescription>
-          {description || 'Sorry, there is no any description'}
-        </NewsFullDescription>
-        <LinkToFullNews href={url} target={'_blank'}>
-          Link to full news ►
-        </LinkToFullNews>
-        <InfoWrapper>
-          <NewsFullDate>{String(date).slice(0, 21)}</NewsFullDate>
-          <NewsFullAuthor>{author || 'unnamed'}</NewsFullAuthor>
-        </InfoWrapper>
-      </Modal>
-    </>
+    <Item data-testid="card-item" onClick={showSeparatePage}>
+      <CardImage
+        style={{
+          backgroundImage: `url(${urlToImage || '../assets/img/no-poster.jpg'}`,
+        }}
+      />
+      <Title>{title}</Title>
+      <Description>{description || 'Sorry, there is no any description'}</Description>
+      <NewsDate>Data: {publishedAt.slice(0, 10)}</NewsDate>
+      <Author>Author: {author || 'unnamed'}</Author>
+    </Item>
   );
 };
 
@@ -77,16 +40,7 @@ const Item = styled.li`
   position: relative;
   padding-bottom: 10px;
   width: 100%;
-  overflow: hidden;
-  background-color: var(--second-contrast);
-  border-radius: 10px;
   list-style: none;
-  transition: 0.3s all;
-
-  &:hover {
-    box-shadow: 0 0 15px 0 var(--primary);
-    cursor: pointer;
-  }
 `;
 
 const Title = styled.p`
@@ -108,9 +62,7 @@ const Description = styled.p`
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
-
-  max-height: 90px;
-  height: 100%;
+  height: 64px;
   margin: 0 10px;
   font-size: 12px;
 `;
@@ -144,51 +96,6 @@ const CardImage = styled.div`
   background-position: center;
   background-size: cover;
   border-radius: 10px 10px 0 0;
-`;
-
-const InfoWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 20px;
-  margin: 20px 0;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const NewsImage = styled.div`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-`;
-
-const NewsFullTitle = styled.p`
-  width: 66%;
-  font-size: 18px;
-  color: var(--primary);
-  margin: 0 10px;
-  text-transform: uppercase;
-`;
-
-const NewsFullDescription = styled.p`
-  font-size: 14px;
-`;
-
-const NewsFullDate = styled.p`
-  font-size: 14px;
-`;
-
-const NewsFullAuthor = styled.p`
-  font-size: 14px;
-`;
-
-const LinkToFullNews = styled.a`
-  display: block;
-  margin: 10px 0;
-  font-size: 14px;
-  color: var(--primary);
 `;
 
 export default Card;

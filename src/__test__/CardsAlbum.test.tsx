@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { CardsAlbum } from '../components';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('CardsAlbum tests', () => {
   test('render some Cards', async () => {
@@ -24,7 +25,11 @@ describe('CardsAlbum tests', () => {
       },
     ];
 
-    render(<CardsAlbum cards={fakeData} />);
+    render(
+      <BrowserRouter>
+        <CardsAlbum cards={fakeData} />
+      </BrowserRouter>
+    );
     expect(screen.getByRole('list')).toBeInTheDocument();
     const text = await screen.findByText(/Hot cakes/i);
     expect(text).toBeInTheDocument();

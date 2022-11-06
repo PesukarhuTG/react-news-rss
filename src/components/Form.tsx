@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import FormProps from '../types/Form';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import useNewsContext from '../store/Context';
 
 interface LoginFormProps {
   onSubmit: (data: FormProps) => void;
@@ -9,38 +10,66 @@ interface LoginFormProps {
 
 const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [selectedFile, setSelectedFile] = useState<any>(null); //eslint-disable-line
+
+  const {
+    formName,
+    setFormName,
+    formDate,
+    setFormDate,
+    formCity,
+    setFormCity,
+    formGender,
+    setFormGender,
+    formAccept,
+    setFormAccept,
+    selectedFile,
+    setSelectedFile,
+    fileText,
+    setFileText,
+  } = useNewsContext();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormProps>();
+  } = useForm<FormProps>({
+    defaultValues: {
+      selectedFile: selectedFile,
+    },
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files !== null) {
-      setSelectedFile(e.target.files[0]);
+      const imgURL = URL.createObjectURL(e.target.files[0]);
+      const imgName = e.target.files[0].name;
+      setFileText(imgName);
+      setSelectedFile(imgURL);
     }
   };
 
   const getDataSubmit: SubmitHandler<FormProps> = (data) => {
-    const blob = new Blob([selectedFile]);
-    const file = URL.createObjectURL(blob);
-
-    onSubmit({ ...data, file });
+    onSubmit({ ...data, selectedFile });
 
     reset();
-    setDisabled(true);
+    setFormName('');
+    setFormDate('');
+    setFormCity('');
+    setFormGender('man');
     setSelectedFile(null);
+    setFileText('No file selected');
+    setFormAccept(false);
   };
 
-  const isDisabledSubmit = (value: string) => {
-    value.length !== 0 ? setDisabled(false) : setDisabled(true);
-  };
+  useEffect(() => {
+    if (formName !== '' || formDate !== '' || formCity !== '') {
+      setDisabled(false);
+    }
+  }, [formName, formDate, formCity]);
 
   return (
     <form onSubmit={handleSubmit(getDataSubmit)} data-testid="form">
-      <div className="form-wrapper">
+      <FormWrapper>
         <label className="input-wrapper">
           <span className="input-name">Name</span>
           <input
@@ -52,7 +81,8 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
             name="name"
             type="text"
             data-testid="input-fname"
-            onChange={(e) => isDisabledSubmit(e.target.value)}
+            value={formName}
+            onChange={(e) => setFormName(e.target.value)}
           />
           {errors.name && <ErrMessage>{errors.name.message}</ErrMessage>}
         </label>
@@ -64,13 +94,14 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
             name="birthday"
             type="date"
             data-testid="input-fdate"
-            onChange={(e) => isDisabledSubmit(e.target.value)}
+            value={formDate}
+            onChange={(e) => setFormDate(e.target.value)}
           />
           {errors.birthday && <ErrMessage>{errors.birthday.message}</ErrMessage>}
         </label>
-      </div>
+      </FormWrapper>
 
-      <div className="form-wrapper">
+      <FormWrapper>
         <label className="input-wrapper">
           <span className="input-name">Choose a city</span>
           <select
@@ -78,7 +109,8 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
             {...register('city', { required: 'City is required' })}
             name="city"
             data-testid="input-fcity"
-            onChange={(e) => isDisabledSubmit(e.target.value)}
+            value={formCity}
+            onChange={(e) => setFormCity(e.target.value)}
           >
             <option value="" />
             <option value="Saint-Petersburg">Saint-Petersburg</option>
@@ -99,7 +131,8 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
               name="gender"
               value="man"
               data-testid="input-fgender-man"
-              defaultChecked
+              defaultChecked={formGender === 'man' ? true : false}
+              onChange={(e) => setFormGender(e.target.value)}
             />
             <label className="gender-name" htmlFor="man">
               man
@@ -112,36 +145,43 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
               name="gender"
               value="woman"
               data-testid="input-fgender-woman"
+              defaultChecked={formGender === 'woman' ? true : false}
+              onChange={(e) => setFormGender(e.target.value)}
             />
             <label className="gender-name" htmlFor="woman">
               woman
             </label>
           </div>
         </label>
-      </div>
+      </FormWrapper>
 
-      <label className="input-wrapper">
-        <span className="input-name">Upload a file</span>
+      <FormWrapperSingle>
         <input
+          id="fileElem"
           className="input-file"
-          {...register('file')}
+          style={{ display: 'none' }}
+          {...register('selectedFile')}
           name="file"
           type="file"
           accept="image/*, .png, .jpg"
           data-testid="input-file"
           onChange={handleChange}
         />
-      </label>
+        <LabelFile htmlFor="fileElem">Choose a file</LabelFile>
+        <FileText>{fileText}</FileText>
+      </FormWrapperSingle>
 
-      <label className="input-wrapper-gorizont">
+      <FormWrapperSingle>
         <input
           type="checkbox"
           {...register('remember')}
           name="remember"
           data-testid="input-faccept"
+          defaultChecked={formAccept}
+          onChange={(e) => setFormAccept(e.target.checked)}
         />
         <span className="remember-name">I consent to use my personal data</span>
-      </label>
+      </FormWrapperSingle>
 
       <button
         className="btn-submit"
@@ -160,6 +200,40 @@ const ErrMessage = styled.p`
   padding-top: 7px;
   font-size: 9px;
   color: var(--accent);
+`;
+
+const LabelFile = styled.label`
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--primary);
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: var(--button-hover);
+  }
+`;
+
+const FileText = styled.p`
+  min-width: 115px;
+  font-size: 14px;
+`;
+
+const FormWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  gap: 30px;
+`;
+
+const FormWrapperSingle = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  gap: 10px;
 `;
 
 export default Form;

@@ -1,5 +1,6 @@
 @import './index.css';
 @import './colors.css';
+@import './variables.css';
 
 *,
 * ::before,
@@ -88,7 +89,7 @@ form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .input-name {
@@ -124,10 +125,6 @@ select.input-city {
   background-color: var(--second-contrast);
 }
 
-input[type='checkbox'] {
-  margin-left: auto;
-}
-
 .btn-submit {
   background-color: var(--primary);
   border-radius: 5px;
@@ -136,25 +133,11 @@ input[type='checkbox'] {
   padding: 10px;
 }
 
-.form-wrapper {
-  display: flex;
-  padding: 10px 0;
-  gap: 30px;
-}
-
 .input-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-}
-
-.input-wrapper-gorizont {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  gap: 10px;
 }
 
 .genders-wrapper {

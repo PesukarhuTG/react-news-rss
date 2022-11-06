@@ -1,13 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import useNewsContext from '../store/Context';
+import TitleCurrentPosition from './TitleCurrentPosition';
 
 const Header: React.FC = () => {
+  const { disableCurrentPosition } = useNewsContext();
+
   return (
     <AppHeader>
       <NavLink to="/" className={'logo'}>
         RACOON digest
       </NavLink>
+
+      {!disableCurrentPosition && <TitleCurrentPosition />}
 
       <HeaderNav>
         <HeaderNavLink to="/" data-testid="mainpage-link" end>
@@ -33,7 +39,6 @@ const AppHeader = styled.header`
 
 const HeaderNav = styled.nav`
   display: flex;
-  margin-left: auto;
   gap: 30px;
 `;
 

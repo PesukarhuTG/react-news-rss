@@ -10,7 +10,7 @@ describe('FormCardsAlbum tests', () => {
       birthday: '2022-10-02',
       city: 'Saint-Petersburg',
       gender: 'woman',
-      file: '../assets/img/no-poster.jpg',
+      selectedFile: '../assets/img/no-poster.jpg',
       remember: true,
     };
 

@@ -24,7 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3330 && react-scripts start",
     "build": "react-scripts build",
     "prettier": "npx prettier -c src/",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",

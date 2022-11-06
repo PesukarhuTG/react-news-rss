@@ -9,18 +9,16 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ visible = false, children, onClose = () => {} }) => {
+  if (!visible) return null;
+
   return (
-    <>
-      {visible && (
-        <ModalContainer>
-          <ModalOverlay onClick={onClose} data-testid="modal-wrapper"></ModalOverlay>
-          <ModalWindow>
-            <ButtonClose onClick={onClose} data-testid="modal-close" />
-            <ModalMessage>{children}</ModalMessage>
-          </ModalWindow>
-        </ModalContainer>
-      )}
-    </>
+    <ModalContainer>
+      <ModalOverlay onClick={onClose} data-testid="modal-wrapper"></ModalOverlay>
+      <ModalWindow>
+        <ButtonClose onClick={onClose} data-testid="modal-close" />
+        <ModalMessage>{children}</ModalMessage>
+      </ModalWindow>
+    </ModalContainer>
   );
 };
 

@@ -13,7 +13,7 @@ describe('Card tests', () => {
       urlToImage:
         'https://media.npr.org/assets/img/2021/08/11/gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg',
     };
-    render(<Card {...fakeData} key={5} />);
+    render(<Card item={fakeData} index={5} />);
 
     const text = screen.getByText(/Daily hot news/i);
     expect(text).toBeInTheDocument();

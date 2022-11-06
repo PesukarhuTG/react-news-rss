@@ -68,7 +68,11 @@ describe('Contacts page tests', () => {
       userEvent.click(submitButton);
     });
 
-    const cards = await screen.getAllByTestId('form-card');
-    expect(cards.length).toBe(1);
+    const checkChanges = async () => {
+      const cards = await screen.getAllByTestId('form-card');
+      expect(cards.length).toBe(1);
+    };
+
+    setTimeout(checkChanges, 300);
   });
 });

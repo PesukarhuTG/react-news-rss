@@ -8,4 +8,6 @@
   --second-contrast: #262a2f;
   --avatar-background: #595959;
   --modal-background: rgba(0, 0, 0, 0.6);
+  --input-border: rgb(118, 118, 118);
+  --button-hover: #1363ad;
 }

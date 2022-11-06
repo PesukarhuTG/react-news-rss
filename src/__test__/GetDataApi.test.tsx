@@ -41,6 +41,16 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('API tests', () => {
+  window.matchMedia =
+    window.matchMedia ||
+    function () {
+      return {
+        matches: false,
+        addListener: function () {},
+        removeListener: function () {},
+      };
+    };
+
   test('fetch and display data', async () => {
     const { findByText } = render(
       <BrowserRouter>

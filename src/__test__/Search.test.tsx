@@ -4,10 +4,10 @@ import '@testing-library/jest-dom/extend-expect';
 import { SearchPanel } from '../components';
 
 describe('Search', () => {
-  test('First, we dont have a focus and then we get it', async () => {
+  test('First, we dont have a focus and then we get it', () => {
     render(<SearchPanel onSearch={() => {}} />);
 
-    await waitFor(() => {
+    waitFor(() => {
       const input = screen.getByPlaceholderText(/Search.../i);
       expect(input).not.toHaveFocus();
       input.focus();
@@ -23,6 +23,9 @@ describe('Search', () => {
     fireEvent.input(input, {
       target: { value: 'swimming' },
     });
-    expect(input).toContainHTML('swimming');
+
+    waitFor(() => {
+      expect(input).toHaveValue('swimming');
+    });
   });
 });

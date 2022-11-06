@@ -3,7 +3,7 @@ interface FormProps {
   birthday: string;
   city: string;
   gender: string;
-  file: File | string;
+  selectedFile: string | null;
   remember: boolean;
 }
 

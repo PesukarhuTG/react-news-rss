@@ -1,13 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import FormProps from '../types/Form';
 
-const FormCard: React.FC<FormProps> = ({ name, birthday, city, gender, file }) => {
+const FormCard: React.FC<FormProps> = ({ name, birthday, city, gender, selectedFile }) => {
   return (
     <Item data-testid="form-card">
       <CardImage
         style={{
-          backgroundImage: `url(${file})`,
+          backgroundImage: `url(${selectedFile})`,
         }}
       />
       <Description>
@@ -18,9 +18,7 @@ const FormCard: React.FC<FormProps> = ({ name, birthday, city, gender, file }) =
         </p>
         <p>
           <strong>Gender: </strong>
-          <span style={{ color: `${gender === 'man' ? 'var(--primary)' : 'var(--gender-w)'}` }}>
-            {gender}
-          </span>
+          <Gender $gender={gender}>{gender}</Gender>
         </p>
         <p>
           <strong>City: </strong>
@@ -70,6 +68,22 @@ const CardImage = styled.div`
   background-position: center;
   background-size: cover;
   border-radius: 50%;
+`;
+
+const Gender = styled.span<{
+  $gender: string;
+}>`
+  ${({ $gender }) => {
+    if ($gender === 'man') {
+      return css`
+        color: var(--primary);
+      `;
+    } else {
+      return css`
+        color: var(--gender-w);
+      `;
+    }
+  }}
 `;
 
 export default FormCard;

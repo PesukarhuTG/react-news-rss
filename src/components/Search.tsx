@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Input } from 'antd';
 import CardProps from '../types/Card';
 import { getNews, searchNews } from '../services/getDataApi';
+import useNewsContext from '../store/Context';
 
 const { Search } = Input;
 
@@ -11,45 +12,50 @@ interface SearchProps {
 }
 
 const SearchPanel: React.FC<SearchProps> = ({ onSearch }) => {
-  const [value, setValue] = useState<string>('');
-  const valRef = useRef(value);
+  const {
+    searchVal,
+    setSearchValue,
+    searchIn,
+    sortBy,
+    sortDateFrom,
+    sortDateTo,
+    currentPage,
+    setTotalPageAmount,
+    pageSize,
+  } = useNewsContext();
 
-  const onChange = (searchValue: string): void => {
-    setValue(searchValue);
-  };
-
-  const handleSubmit = (): void => {
-    if (value) {
-      searchNews(value).then((resp) => {
-        onSearch(resp.articles);
-      });
-    } else {
-      getNews().then((resp) => {
-        onSearch(resp.articles);
-      });
+  const handleSubmit = async () => {
+    try {
+      if (searchVal) {
+        await searchNews(
+          searchVal,
+          searchIn,
+          sortBy,
+          sortDateFrom,
+          sortDateTo,
+          currentPage,
+          pageSize
+        ).then((resp) => {
+          onSearch(resp.articles);
+          setTotalPageAmount(resp.totalResults > 100 ? 100 : resp.totalResults);
+        });
+      } else {
+        await getNews(currentPage, pageSize).then((resp) => {
+          onSearch(resp.articles);
+          setTotalPageAmount(resp.totalResults > 100 ? 100 : resp.totalResults);
+        });
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
-
-  useEffect(() => {
-    valRef.current = value;
-  }, [value]);
-
-  useEffect(() => {
-    const value = localStorage.getItem('searchData');
-    if (value) {
-      setValue(value);
-    }
-    return () => {
-      localStorage.setItem('searchData', valRef.current);
-    };
-  }, []);
 
   return (
     <StyledSearch
       placeholder="Search..."
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => setSearchValue(e.target.value)}
       onSearch={handleSubmit}
-      value={value}
+      value={searchVal}
       data-testid="input-search"
       allowClear
       enterButton

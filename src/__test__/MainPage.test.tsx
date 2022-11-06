@@ -1,10 +1,20 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
 import { MainPage } from '../pages';
 
 describe('Main page tests', () => {
+  window.matchMedia =
+    window.matchMedia ||
+    function () {
+      return {
+        matches: false,
+        addListener: function () {},
+        removeListener: function () {},
+      };
+    };
+
   test('render Main page', () => {
     render(
       <BrowserRouter>
@@ -31,13 +41,11 @@ describe('Main page tests', () => {
 
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
-    const showFailMessage = () => {
+    waitFor(() => {
       const failMessage = screen.getByText(/Sorry, your request is failed/i);
       const cards = screen.queryAllByTestId('card-item');
       expect(failMessage).toBeInTheDocument();
       expect(cards.length).toEqual(0);
-    };
-
-    setTimeout(showFailMessage, 1000);
+    });
   });
 });
