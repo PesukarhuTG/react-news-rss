@@ -1,49 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Input } from 'antd';
-import CardProps from '../types/Card';
-import { getNews, searchNews } from '../services/getDataApi';
-import useNewsContext from '../store/Context';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeSearchValue, fetchPosts, fetchSearchPosts } from '../store/NewsSlice';
+import { AppDispatch, RootState } from 'store/Store';
 
 const { Search } = Input;
 
-interface SearchProps {
-  onSearch: (data: CardProps[]) => void;
-}
-
-const SearchPanel: React.FC<SearchProps> = ({ onSearch }) => {
-  const {
-    searchVal,
-    setSearchValue,
-    searchIn,
-    sortBy,
-    sortDateFrom,
-    sortDateTo,
-    currentPage,
-    setTotalPageAmount,
-    pageSize,
-  } = useNewsContext();
+const SearchPanel: React.FC = () => {
+  const { searchVal, searchIn, sortBy, sortDateFrom, sortDateTo, currentPage, pageSize } =
+    useSelector((state: RootState) => state.news);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = async () => {
     try {
       if (searchVal) {
-        await searchNews(
+        const setRequestData = {
           searchVal,
           searchIn,
           sortBy,
           sortDateFrom,
           sortDateTo,
           currentPage,
-          pageSize
-        ).then((resp) => {
-          onSearch(resp.articles);
-          setTotalPageAmount(resp.totalResults > 100 ? 100 : resp.totalResults);
-        });
+          pageSize,
+        };
+        dispatch(fetchSearchPosts(setRequestData));
       } else {
-        await getNews(currentPage, pageSize).then((resp) => {
-          onSearch(resp.articles);
-          setTotalPageAmount(resp.totalResults > 100 ? 100 : resp.totalResults);
-        });
+        const setPages = { currentPage, pageSize };
+        dispatch(fetchPosts(setPages));
       }
     } catch (e) {
       console.error(e);
@@ -53,7 +37,7 @@ const SearchPanel: React.FC<SearchProps> = ({ onSearch }) => {
   return (
     <StyledSearch
       placeholder="Search..."
-      onChange={(e) => setSearchValue(e.target.value)}
+      onChange={(e) => dispatch(changeSearchValue(e.target.value))}
       onSearch={handleSubmit}
       value={searchVal}
       data-testid="input-search"

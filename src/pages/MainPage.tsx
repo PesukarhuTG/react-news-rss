@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { AppDispatch, RootState } from 'store/Store';
+import React, { useEffect } from 'react';
 import {
   Layout,
   SearchPanel,
@@ -10,14 +11,10 @@ import {
   Pagination,
 } from 'components';
 import styled from 'styled-components';
-import { getNews, searchNews } from '../services/getDataApi';
-import CardProps from '../types/Card';
-import useNewsContext from '../store/Context';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSearchPosts, fetchPosts } from 'store/NewsSlice';
 
 const MainPage: React.FC = () => {
-  const [news, setNews] = useState<CardProps[]>([]);
-  const [message, setMessage] = useState<string>('');
-
   const {
     searchVal,
     searchIn,
@@ -25,56 +22,38 @@ const MainPage: React.FC = () => {
     sortDateFrom,
     sortDateTo,
     currentPage,
-    setCurrentPage,
-    totalPageAmount,
-    setTotalPageAmount,
     pageSize,
-    setPageSize,
-  } = useNewsContext();
-
-  const onSubmit = (data: CardProps[]): void => {
-    if (!data.length) {
-      setMessage('Sorry, your request is failed');
-    } else {
-      setMessage('');
-    }
-    setNews(data);
-  };
+    newsData,
+    errorMessage,
+  } = useSelector((state: RootState) => state.news);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    const checkData = async (): Promise<void> => {
+    const onLoadChangedData = async (): Promise<void> => {
       if (searchVal) {
-        const data = await searchNews(
+        const setRequestData = {
           searchVal,
           searchIn,
           sortBy,
           sortDateFrom,
           sortDateTo,
           currentPage,
-          pageSize
-        ).then((resp) => resp);
-
-        if (!data.articles.length) {
-          setMessage('Sorry, your request is failed');
-        } else {
-          setMessage('');
-          setNews(data.articles);
-          setTotalPageAmount(data.totalResults > 100 ? 100 : data.totalResults);
-        }
+          pageSize,
+        };
+        dispatch(fetchSearchPosts(setRequestData));
       } else {
-        const data = await getNews(currentPage, pageSize).then((resp) => resp);
-        setNews(data.articles);
-        setTotalPageAmount(data.totalResults > 100 ? 100 : data.totalResults);
+        const setPages = { currentPage, pageSize };
+        dispatch(fetchPosts(setPages));
       }
     };
 
-    checkData();
+    onLoadChangedData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchIn, sortBy, sortDateFrom, sortDateTo, currentPage, pageSize]);
 
   return (
     <Layout>
-      <SearchPanel onSearch={onSubmit} />
+      <SearchPanel />
       <Headling>Hot news on Racoon digest</Headling>
       <SortWrapper>
         <SortBlock>
@@ -87,17 +66,9 @@ const MainPage: React.FC = () => {
           <SortDateTo />
         </SortBlock>
       </SortWrapper>
-      <Message data-testid="fail-message">{message}</Message>
-      <CardsAlbum cards={news} />
-      <Pagination
-        page={currentPage}
-        onChange={(page, pageSize) => {
-          setCurrentPage(page);
-          setPageSize(pageSize);
-        }}
-        total={totalPageAmount}
-        pageSize={pageSize}
-      />
+      <Message data-testid="fail-message">{errorMessage}</Message>
+      <CardsAlbum cards={newsData} />
+      <Pagination />
     </Layout>
   );
 };

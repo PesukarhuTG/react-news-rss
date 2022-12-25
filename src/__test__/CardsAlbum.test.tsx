@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { CardsAlbum } from '../components';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from '../store/Store';
 
 describe('CardsAlbum tests', () => {
   test('render some Cards', async () => {
@@ -26,9 +28,11 @@ describe('CardsAlbum tests', () => {
     ];
 
     render(
-      <BrowserRouter>
-        <CardsAlbum cards={fakeData} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <CardsAlbum cards={fakeData} />
+        </BrowserRouter>
+      </Provider>
     );
     expect(screen.getByRole('list')).toBeInTheDocument();
     const text = await screen.findByText(/Hot cakes/i);

@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import useNewsContext from '../store/Context';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/Store';
 
 const TitleCurrentPosition: React.FC = () => {
-  const { currentPage, savedCardData } = useNewsContext();
+  const { currentPage, savedCardData } = useSelector((state: RootState) => state.news);
 
   return (
     <Title>
-      page #{currentPage}, news #{savedCardData.index || 0}
+      page #{currentPage}, news #{savedCardData ? savedCardData.index : 0}
     </Title>
   );
 };

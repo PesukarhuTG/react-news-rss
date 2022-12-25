@@ -2,7 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import FormProps from '../types/Form';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import useNewsContext from '../store/Context';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  changeFormName,
+  changeFormDate,
+  changeFormCity,
+  changeFormGender,
+  changeFile,
+  changeFormAccept,
+  changeFileText,
+} from 'store/FormSlice';
+import { AppDispatch, RootState } from 'store/Store';
 
 interface LoginFormProps {
   onSubmit: (data: FormProps) => void;
@@ -10,23 +20,9 @@ interface LoginFormProps {
 
 const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [disabled, setDisabled] = useState<boolean>(true);
-
-  const {
-    formName,
-    setFormName,
-    formDate,
-    setFormDate,
-    formCity,
-    setFormCity,
-    formGender,
-    setFormGender,
-    formAccept,
-    setFormAccept,
-    selectedFile,
-    setSelectedFile,
-    fileText,
-    setFileText,
-  } = useNewsContext();
+  const { formName, formDate, formCity, formGender, formAccept, selectedFile, fileText } =
+    useSelector((state: RootState) => state.forms);
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     register,
@@ -43,8 +39,8 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
     if (e.target.files !== null) {
       const imgURL = URL.createObjectURL(e.target.files[0]);
       const imgName = e.target.files[0].name;
-      setFileText(imgName);
-      setSelectedFile(imgURL);
+      dispatch(changeFileText(imgName));
+      dispatch(changeFile(imgURL));
     }
   };
 
@@ -52,13 +48,13 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
     onSubmit({ ...data, selectedFile });
 
     reset();
-    setFormName('');
-    setFormDate('');
-    setFormCity('');
-    setFormGender('man');
-    setSelectedFile(null);
-    setFileText('No file selected');
-    setFormAccept(false);
+    dispatch(changeFormName(''));
+    dispatch(changeFormDate(''));
+    dispatch(changeFormCity(''));
+    dispatch(changeFormGender('man'));
+    dispatch(changeFile(null));
+    dispatch(changeFileText('No file selected'));
+    dispatch(changeFormAccept(false));
   };
 
   useEffect(() => {
@@ -82,7 +78,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
             type="text"
             data-testid="input-fname"
             value={formName}
-            onChange={(e) => setFormName(e.target.value)}
+            onChange={(e) => dispatch(changeFormName(e.target.value))}
           />
           {errors.name && <ErrMessage>{errors.name.message}</ErrMessage>}
         </label>
@@ -95,7 +91,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
             type="date"
             data-testid="input-fdate"
             value={formDate}
-            onChange={(e) => setFormDate(e.target.value)}
+            onChange={(e) => dispatch(changeFormDate(e.target.value))}
           />
           {errors.birthday && <ErrMessage>{errors.birthday.message}</ErrMessage>}
         </label>
@@ -110,7 +106,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
             name="city"
             data-testid="input-fcity"
             value={formCity}
-            onChange={(e) => setFormCity(e.target.value)}
+            onChange={(e) => dispatch(changeFormCity(e.target.value))}
           >
             <option value="" />
             <option value="Saint-Petersburg">Saint-Petersburg</option>
@@ -132,7 +128,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
               value="man"
               data-testid="input-fgender-man"
               defaultChecked={formGender === 'man' ? true : false}
-              onChange={(e) => setFormGender(e.target.value)}
+              onChange={(e) => dispatch(changeFormGender(e.target.value))}
             />
             <label className="gender-name" htmlFor="man">
               man
@@ -146,7 +142,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
               value="woman"
               data-testid="input-fgender-woman"
               defaultChecked={formGender === 'woman' ? true : false}
-              onChange={(e) => setFormGender(e.target.value)}
+              onChange={(e) => dispatch(changeFormGender(e.target.value))}
             />
             <label className="gender-name" htmlFor="woman">
               woman
@@ -178,7 +174,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit }) => {
           name="remember"
           data-testid="input-faccept"
           defaultChecked={formAccept}
-          onChange={(e) => setFormAccept(e.target.checked)}
+          onChange={(e) => dispatch(changeFormAccept(e.target.checked))}
         />
         <span className="remember-name">I consent to use my personal data</span>
       </FormWrapperSingle>

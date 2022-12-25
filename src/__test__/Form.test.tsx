@@ -2,22 +2,36 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Form } from '../components';
+import { Provider } from 'react-redux';
+import store from '../store/Store';
 
 describe('Form tests', () => {
   global.URL.createObjectURL = jest.fn();
 
   test('render Form', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
     expect(screen.getByTestId('form')).toBeInTheDocument();
   });
 
   test('render Form inputs on page', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
     expect(screen.getByTestId('input-file')).toBeInTheDocument();
   });
 
   test('input name: check form value', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
 
     const input = screen.getByTestId('input-fname');
     expect(input).toBeInTheDocument();
@@ -33,7 +47,11 @@ describe('Form tests', () => {
   });
 
   test('input radio: check render', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
 
     const input = screen.getAllByRole('radio') as HTMLInputElement[];
     expect(input[0]).toBeInTheDocument();
@@ -43,7 +61,11 @@ describe('Form tests', () => {
   });
 
   test('input date: check render', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
 
     const input = screen.getByTestId('input-fdate');
     expect(input).toBeInTheDocument();
@@ -58,7 +80,11 @@ describe('Form tests', () => {
   });
 
   test('input file: upload file', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
 
     const fakeFile = new File(['hello'], 'hello.png', { type: 'image/png' });
     const inputFile = screen.getByTestId('input-file') as HTMLInputElement;
@@ -78,7 +104,11 @@ describe('Form tests', () => {
   });
 
   test('input checkbox: check render', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
 
     const checkbox = screen.getByTestId('input-faccept');
     expect(checkbox).toBeInTheDocument();
@@ -88,7 +118,11 @@ describe('Form tests', () => {
   });
 
   test('select: check render', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
 
     const select = screen.getByTestId('input-fcity') as HTMLSelectElement;
 
@@ -101,26 +135,28 @@ describe('Form tests', () => {
   });
 
   test('render submit button', () => {
-    render(<Form onSubmit={() => {}} />);
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
     const button = screen.getByTestId('btn-submit');
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass('btn-submit');
-    expect(button).toBeDisabled();
   });
 
-  test('clear form after submit', async () => {
-    render(<Form onSubmit={() => {}} />);
+  test('clear form after submit', () => {
+    render(
+      <Provider store={store}>
+        <Form onSubmit={() => {}} />
+      </Provider>
+    );
 
-    const inputName = await screen.getByTestId('input-fname');
-    const inputDate = await screen.getByTestId('input-fdate');
-    const inputSelect = await screen.getByTestId('input-fcity');
+    const inputName = screen.getByTestId('input-fname');
+    const inputDate = screen.getByTestId('input-fdate');
+    const inputSelect = screen.getByTestId('input-fcity');
     const checkbox = screen.getByTestId('input-faccept');
-    const submitButton = await screen.getByTestId('btn-submit');
-
-    expect(inputName).toHaveValue('');
-    expect(inputDate).toHaveValue('');
-    expect(inputSelect).toHaveValue('');
-    expect(checkbox).not.toBeChecked();
+    const submitButton = screen.getByTestId('btn-submit');
 
     fireEvent.change(inputName, {
       target: { value: 'Tatiana' },

@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import FormProps from '../types/Form';
 import { Layout, Form, FormCardsAlbum } from '../components';
-import useNewsContext from '../store/Context';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeFormList } from 'store/FormSlice';
+import { AppDispatch, RootState } from 'store/Store';
 
 const FormPage: React.FC = () => {
   const [message, setMessage] = useState<string>('');
-  const { formList, setFormList } = useNewsContext();
+  const { formList } = useSelector((state: RootState) => state.forms);
+  const dispatch = useDispatch<AppDispatch>();
 
   const onSubmit = (formFields: FormProps) => {
-    const currentList = formList;
+    const currentList = [...formList];
     currentList.push(formFields);
-    setFormList(currentList);
+    dispatch(changeFormList(currentList));
 
     setMessage('Your data has been saved!');
     setTimeout(() => setMessage(''), 1500);

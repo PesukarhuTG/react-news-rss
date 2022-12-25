@@ -4,15 +4,19 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
 import { FormPage } from '../pages';
+import { Provider } from 'react-redux';
+import store from '../store/Store';
 
 describe('Contacts page tests', () => {
   global.URL.createObjectURL = jest.fn();
 
   test('Contacts page render', () => {
     render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormPage />
+        </BrowserRouter>
+      </Provider>
     );
 
     const title = screen.getByText(/Save your data/i);
@@ -21,9 +25,11 @@ describe('Contacts page tests', () => {
 
   test('render Form on Contacts page', () => {
     render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormPage />
+        </BrowserRouter>
+      </Provider>
     );
 
     expect(screen.getByTestId('form')).toBeInTheDocument();
@@ -31,9 +37,11 @@ describe('Contacts page tests', () => {
 
   test('render without cards', () => {
     render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormPage />
+        </BrowserRouter>
+      </Provider>
     );
 
     const cardsElement = screen.queryByTestId('card-item');
@@ -42,9 +50,11 @@ describe('Contacts page tests', () => {
 
   test('create and render 1 card', async () => {
     render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormPage />
+        </BrowserRouter>
+      </Provider>
     );
 
     const inputName = await screen.getByTestId('input-fname');

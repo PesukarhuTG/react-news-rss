@@ -1,28 +1,22 @@
 import React from 'react';
 import { Pagination as AntdPagination } from 'antd';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from 'store/Store';
+import { changeCurrentPage } from '../store/NewsSlice';
 
-interface PaginationProps {
-  page?: number;
-  total?: number;
-  pageSize: number;
-  onChange?: (page: number, pageSize: number) => void;
-}
+const Pagination: React.FC = () => {
+  const { pageSize, currentPage, totalPageAmount } = useSelector((state: RootState) => state.news);
+  const dispatch = useDispatch<AppDispatch>();
 
-const Pagination: React.FC<PaginationProps> = ({
-  pageSize,
-  page = 1,
-  onChange = () => {},
-  total = 100,
-}) => {
   return (
     <StyledPagination
       showQuickJumper
       showSizeChanger
       defaultCurrent={1}
-      total={total}
-      onChange={onChange}
-      current={page}
+      total={totalPageAmount}
+      onChange={(e) => dispatch(changeCurrentPage(e))}
+      current={currentPage}
       pageSize={pageSize}
     />
   );

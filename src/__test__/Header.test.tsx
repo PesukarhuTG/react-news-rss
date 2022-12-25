@@ -4,13 +4,17 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter } from 'react-router-dom';
 import { Header } from '../components';
+import { Provider } from 'react-redux';
+import store from '../store/Store';
 
 describe('Header tests', () => {
   test('pages', () => {
     render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </Provider>
     );
 
     const homeLink = screen.getByTestId('mainpage-link');
@@ -25,9 +29,11 @@ describe('Header tests', () => {
 
   test('there is a Navigation in Header', () => {
     render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </Provider>
     );
 
     const nav = screen.getByRole('navigation');
@@ -36,9 +42,11 @@ describe('Header tests', () => {
 
   test('there is a Logo element in Header', () => {
     render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </Provider>
     );
 
     const logo = screen.getByText(/RACOON digest/);
@@ -47,9 +55,11 @@ describe('Header tests', () => {
 
   test('there is a Home element in Header', () => {
     render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </Provider>
     );
 
     const element = screen.getByText(/Home/);
@@ -58,9 +68,11 @@ describe('Header tests', () => {
 
   test('there is an About element in Header', () => {
     render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </Provider>
     );
 
     const element = screen.getByText(/About/);
