@@ -1,49 +1,52 @@
-# Getting Started with Create React App
+# React News API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Description
 
-## Available Scripts
+This is a big project based on learning React step-by-step. So, resolving main task I went several stages:<br/>
+**1. Create app, using Class components**
+- CRA + Typescript + eslint + prettier
+- Add React-Router version 6, pages: Main, About us, Form, 404
+- Implement Search panel on Main page. Using News API we have to get data from API and show cards
+- Create form on Form page (Add functionality: collect information through a form -  text input, date input, dropdown/select, checkbox, switcher, file upload (image)). After the Submit button is clicked, all data from the form has to be displayed as Card in the cards list below the form. The confirmation message (with information that the data has been saved) should be displayed, after that form has to be cleared.
+- Add tests for components using React Testing Library
 
-In the project directory, you can run:
+**2. Rewrite project with Functional component (hooks) retaining the functionality**
 
-### `npm start`
+**3. Implement state management solution using useReducer and Context API (global state) for search results and form data saving**
+- now, when switching between pages, all data should be saved
+- implement sorting and pagination
+- show search details in a separate page
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**4. Rewrite the state management to Redux using React Toolkit**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Conclusion
 
-### `npm test`
+Working with this project I got a rich experience in using React! It was WOW!
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+*
+*
+*
 
-### `npm run build`
+## UPD 12/2022: Deploy link [here](https://react-components-pesukarhutg.netlify.app/), but unfortunately there is an issue with Cors-policy, so News API doesn't work :/
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+*
+*
+*
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+**1) Main page with Search panel and cards ====================================**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![Снимок-01](https://user-images.githubusercontent.com/39487464/209476954-3447ac0d-fa51-4967-b3f8-fc72af9e6536.JPG)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**2) we can see search details in a separate page =============================**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![Снимок-33](https://user-images.githubusercontent.com/39487464/209476958-c1284705-e3e3-4df9-a2fd-2e48671ffd62.JPG)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**3) Form page according task =================================================**
 
-## Learn More
+![Снимок-66](https://user-images.githubusercontent.com/39487464/209476960-711526fb-0125-4813-a0ac-b6b0ccdc69b9.JPG)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-![Снимок-pr](https://user-images.githubusercontent.com/39487464/205696429-068384c5-d25a-40dd-992a-38cdc54930de.JPG)
 
 
